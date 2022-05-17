@@ -3,6 +3,7 @@ import { View, SafeAreaView, FlatList } from "react-native";
 
 import { NFTCard, HomeHeader, FocusedStatusBar } from "../components";
 import { COLORS, NFTData } from "../constants";
+import { auth } from '../database/firebase';
 
 const Home = () => {
   const [nftData, setNftData] = useState(NFTData);
@@ -22,6 +23,13 @@ const Home = () => {
       setNftData(filteredData);
     }
   };
+
+  const signOut = () => {
+    auth.signOut().then(() => {
+      navigation.navigate('Login')
+    })
+    .catch(error => console.log(error));
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
