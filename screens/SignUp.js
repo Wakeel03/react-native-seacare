@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import { auth } from '../database/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../database/firebase';
 
 const SignUp = () => {
   
@@ -19,7 +21,6 @@ const SignUp = () => {
     const newState = { ...state };
     newState[prop] = val;
     setState(newState);
-    console.log(newState)
   }
 
   const registerUser = () => {
@@ -32,10 +33,13 @@ const SignUp = () => {
       })
       createUserWithEmailAndPassword(auth, state.email, state.password)
       .then((res) => {
-        res.user.updateProfile({
-          displayName: state.displayName
+        console.log(res)
+        const usersRef = collection(db, 'Users')
+        addDoc(usersRef, {
+          displayName: state.displayName,
+          email: state.email,
+          uid: res.user.uid
         })
-        console.log('User registered successfully!')
         setState({
           isLoading: false,
           displayName: '',

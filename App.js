@@ -6,7 +6,7 @@ import { useFonts } from "expo-font";
 import Home from "./screens/Home";
 import Details from "./screens/Details";
 import Login from "./screens/Login";
-import Signup from "./screens/SignUp";
+import SignUp from "./screens/SignUp";
 import BottomTabs from "./components/BottomTabs";
 import CameraScreen from "./screens/CameraScreen";
 
@@ -22,11 +22,11 @@ const Stack = createStackNavigator();
 
 const App = () => {
   const [loaded] = useFonts({
-    InterBold: require("./assets/fonts/Inter-Bold.ttf"),
-    InterSemiBold: require("./assets/fonts/Inter-SemiBold.ttf"),
-    InterMedium: require("./assets/fonts/Inter-Medium.ttf"),
-    InterRegular: require("./assets/fonts/Inter-Regular.ttf"),
-    InterLight: require("./assets/fonts/Inter-Light.ttf"),
+    PoppinsSemiBold: require("./assets/fonts/Poppins-SemiBold.ttf"),
+    PoppinsMedium: require("./assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("./assets/fonts/Poppins-Regular.ttf"),
+    PoppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
+    PoppinsExtraLight: require("./assets/fonts/Poppins-ExtraLight.ttf"),
   });
 
   if (!loaded) return null;
@@ -40,7 +40,7 @@ const App = () => {
         initialRouteName="BottomTabs"
       >
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Sign Up" component={Signup} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Navigator>

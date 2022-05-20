@@ -1,0 +1,21 @@
+Firebase CRUD Operations
+
+1. Read
+const usersCollectionRef = collection(db, 'users') -> 'users' is the collection(table)
+
+const data = await getDocs(usersCollectionRef)
+setUsers(
+    data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) -> doc.data() contains the fields, doc.id is the document(row) id
+)
+
+2. Create
+await addDoc(usersCollectionRef, { name: newName, age: newAge })
+
+3. Update
+const userDoc = doc(db, 'users', id)
+const newFields = { age: age + 1 }
+await updateDoc(userDoc, newFields)
+
+4. Delete
+const userDoc = doc(db, 'users', id)
+const userDoc = deleteDoc(userDoc)

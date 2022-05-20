@@ -39,7 +39,7 @@ const Login = () => {
           email: '', 
           password: ''
         })
-        navigation.navigate('Home')
+        navigation.navigate('BottomTabs')
       })
       .catch(error => { console.error(error); setState({ errorMessage: error.message })})
     }
@@ -75,7 +75,7 @@ const Login = () => {
         />   
         <Text 
           style={styles.loginText}
-          onPress={() => navigation.navigate('Signup')}>
+          onPress={() => navigation.navigate('SignUp')}>
           Don't have account? Click here to signup
         </Text>                          
       </View>

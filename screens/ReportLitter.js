@@ -1,27 +1,24 @@
-import { View, TextInput, Text, Image } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
+import { ref, uploadBytesResumable } from 'firebase/storage'
 import { storage } from '../database/firebase'
-import { ref, uploadBytes } from 'firebase/storage'
-import app from  '../database/firebase'
 import { db } from '../database/firebase'
+import { collection, addDoc } from 'firebase/firestore'
+import CustomInput from '../components/CustomInput'
+import CustomInputImageCarousel from '../components/CustomInputImageCarousel'
+import ButtonFull from '../components/ButtonFull'
 
 const ReportLitter = () => {
   const navigation = useNavigation();
   
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   
-  const [picture, setPicture] = useState(null);
+  const [title, setTitle] = useState('');
+  const [pictures, setPictures] = useState([]);
   const [description, setDescription] = useState('');
-
-  const options = {
-    saveToPhotos: true,
-    mediaType: 'photo',
-    quality: 1,
-    includeBase64: true,
-  }
+  const [location, setLocation] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -40,7 +37,24 @@ const ReportLitter = () => {
     });
 
     if (!result.cancelled) {
-      setPicture(result.uri)
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          console.log(e);
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", result.uri, true);
+        xhr.send(null);
+      })
+      
+      setPictures([...pictures, {
+        blob,
+        uri: result.uri
+      }])
     }
 
   }
@@ -49,41 +63,67 @@ const ReportLitter = () => {
     return <Text>No Access to Internal Storage</Text>
   }
 
-  const sendPicture = async() => {
-    // const imageRef = ref(storage, `report_litter/${Date.now()}`);
-    // await uploadBytes(imageRef, picture)
-    let snapshot = await db.collection("ReportLitters").where('uid', '==', '1').get()
-    snapshot.docs.forEach(doc => {
-      console.log(doc.data())
-    })
-  // Atomically add a new region to the "regions" array field.
-  // var arrUnion = washingtonRef.update({
-  //   regions: admin.firestore.FieldValue.arrayUnion('greater_virginia')
-  // });
-  // // Atomically remove a region from the "regions" array field.
-  // var arrRm = washingtonRef.update({
-  //   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
-  // });
-
-
-
+  const createIssue = async() => {
+    const imagesNames = await sendPictures()
+    const issuesRef = collection(db, 'Issues')
     
+    await addDoc(issuesRef, {
+      description,
+      images: imagesNames,
+      is_approved: false,
+      location,
+      title
+
+    })
+
+  }
+
+  const sendPictures = async() => {
+    //TODO: Upload multiple images -> return array of Names
+    try{
+      let imageNames = []
+
+      pictures.forEach(async (picture) => {
+        const imageRef = ref(storage, `report_litter/${Date.now()}`)
+        const res = await uploadBytesResumable(imageRef, picture.blob)
+        imageNames = [...imagesNames, res.metadata.name]
+      })
+      
+      return imageNames
+    }
+    catch(err) {
+      console.log(err)
+    }
   }
 
   return (
-    <View>
-        <TouchableOpacity onPress={() => pickImage()}><Text>Open Camera</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => pickImage()}><Text>Open Gallery</Text></TouchableOpacity>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Description"
-          onChangeText={newDescription => setText(newDescription)}
-          defaultValue={description}
-        />
-        {picture && <Image source={{ uri: picture }} style={{ width: 200, height: 200 }} />}
-        <TouchableOpacity onPress={() => sendPicture()}><Text>Submit</Text></TouchableOpacity>
+    <View style={styles.container}>
+        <CustomInput label={'Title'} placeholder={'Enter a title'} onChangeText={(newTitle) => setTitle(newTitle)} defaultValue={title}/>
+        <CustomInput label={'Description'} placeholder={'Write a description'} onChangeText={(newDescription) => setDescription(newDescription)} defaultValue={description}/>
+        <CustomInput label={'Location'} placeholder={'Enter the location'} onChangeText={(newLocation) => setLocation(newLocation)} defaultValue={location}/>
+        
+        {pictures && <CustomInputImageCarousel pictures={pictures}/>}
+        
+        <View style={styles.buttonsWrapper}>
+          <ButtonFull text={'Upload Pictures'} onPress={() => pickImage()} backgroundColor='#626FDB' />
+          <ButtonFull text={'Submit'} onPress={() => createIssue()} backgroundColor='#54BD7E' />
+        </View>
+        
+        {/* <TouchableOpacity onPress={() => pickImage()}><Text>Open Camera</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => pickImage()}><Text>Open Gallery</Text></TouchableOpacity> */}
+
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  buttonsWrapper: {
+    marginTop: 30
+  }
+})
 
 export default ReportLitter
