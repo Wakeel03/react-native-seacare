@@ -33,6 +33,7 @@ const BottomTabs = () => {
         headerShadowVisible: false
       }}>
 
+    <Tab.Screen name="Communities" component={Communities} />
       <Tab.Screen name="Home" component={Home} options={{
         tabBarIcon: ({ color, focused }) => (
           focused ? <View style={styles.activeTabBackground}><Icon name="home" color={color} /></View> : <Icon name="home" color={color}/>
@@ -57,11 +58,10 @@ const BottomTabs = () => {
           ),
         }}/>
         
-      {/* 
-        <Tab.Screen name="Create Community" component={CreateCommunity} />
+      
+        {/* <Tab.Screen name="Create Community" component={CreateCommunity} />
         <Tab.Screen name="Create Event" component={CreateEvent} />
-      <Tab.Screen name="Add Member" component={AddCommunityMembers} />
-      <Tab.Screen name="Communities" component={Communities} /> */}
+      <Tab.Screen name="Add Member" component={AddCommunityMembers} /> */}
     </Tab.Navigator>
   );
 }
