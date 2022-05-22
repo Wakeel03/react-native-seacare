@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontFamily: FONTS.medium,
-        fontSize: '14px'
+        fontSize: 14
     }
 
 

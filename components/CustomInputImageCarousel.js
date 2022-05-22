@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     label:{
         marginBottom: 5,
         fontFamily: FONTS.medium,
-        fontSize: '14px'
+        fontSize: 14
     },
     carouselWrapper: {
         flexDirection: 'row',

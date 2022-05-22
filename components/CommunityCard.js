@@ -11,7 +11,7 @@ const CommunityCard = ({ community, avatarColor }) => {
   }
 
   return (
-    <View style={[styles.container, { borderWidth: '1px', borderColor: avatarColor }]}>
+    <View style={[styles.container, { borderWidth: 1, borderColor: avatarColor }]}>
         <View style={[styles.circleAvatar, { backgroundColor: avatarColor }]}></View>
         <Text style={styles.name}>{community.name}</Text>
         <TouchableOpacity style={styles.join} onPress={() => joinCommunity(community.docId)}><Text style={styles.joinText}>Join</Text></TouchableOpacity>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     joinText: {
         fontFamily: FONTS.regular,
         color: '#fff',
-        fontSize: '12px'
+        fontSize: 12
     }
 
 })

@@ -37,8 +37,8 @@ const Communities = () => {
   return (
     <View style={styles.container}>
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.joinAction} onPress={() => {}}><Text style={{ fontFamily: FONTS.medium, fontSize: '12px'  }}>Join</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.myCommunities} onPress={() => {}}><Text style={{ fontFamily: FONTS.medium, fontSize: '12px'  }}>My Communities</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.joinAction} onPress={() => {}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Join</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.myCommunities} onPress={() => {}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Communities</Text></TouchableOpacity>
         </View>
         {communities && communities.map((community, index) => (
           <CommunityCard key={community.docId} community={community} avatarColor={colors[index % colors.length]} />

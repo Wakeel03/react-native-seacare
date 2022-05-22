@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     label:{
         marginBottom: 5,
         fontFamily: FONTS.medium,
-        fontSize: '14px'
+        fontSize: 14
     },
     input: {
         borderWidth: 1,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         padding: 10,
         fontFamily: FONTS.regular,
         backgroundColor: '#FBFBFB',
-        fontSize: '12px'
+        fontSize: 12
     }
 })
 
