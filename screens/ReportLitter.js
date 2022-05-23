@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
@@ -9,6 +9,10 @@ import { collection, addDoc } from 'firebase/firestore'
 import CustomInput from '../components/CustomInput'
 import CustomInputImageCarousel from '../components/CustomInputImageCarousel'
 import ButtonFull from '../components/ButtonFull'
+import { FONTS } from '../constants'
+import { Icon } from 'react-native-elements'
+import { IconFill, IconOutline } from "@ant-design/icons-react-native";
+
 
 const ReportLitter = () => {
   const navigation = useNavigation();
@@ -98,6 +102,10 @@ const ReportLitter = () => {
 
   return (
     <View style={styles.container}>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={() => navigation.goBack()}><Text>{'<'}</Text></TouchableOpacity>
+          <Text style={styles.title}>Report Littering</Text>
+        </View>
         <CustomInput label={'Title'} placeholder={'Enter a title'} onChangeText={(newTitle) => setTitle(newTitle)} defaultValue={title}/>
         <CustomInput label={'Description'} placeholder={'Write a description'} onChangeText={(newDescription) => setDescription(newDescription)} defaultValue={description}/>
         <CustomInput label={'Location'} placeholder={'Enter the location'} onChangeText={(newLocation) => setLocation(newLocation)} defaultValue={location}/>
@@ -111,16 +119,21 @@ const ReportLitter = () => {
         
         {/* <TouchableOpacity onPress={() => pickImage()}><Text>Open Camera</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => pickImage()}><Text>Open Gallery</Text></TouchableOpacity> */}
-
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 20,
-    paddingRight: 20
+    padding: 20
   },
+  
+  title: {
+    fontSize: 20,
+    fontFamily: FONTS.medium,
+    marginBottom: 20
+  }, 
+
   buttonsWrapper: {
     marginTop: 30
   }

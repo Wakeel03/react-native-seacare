@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } f
 import { auth } from '../database/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import Logo from '../components/Logo';
 
 const Login = () => {
   
@@ -54,6 +55,7 @@ const Login = () => {
     }    
   return (
       <View style={styles.container}>  
+        <Logo />
         <TextInput
           style={styles.inputStyle}
           placeholder="Email"
@@ -91,6 +93,7 @@ const styles = StyleSheet.create({
     padding: 35,
     backgroundColor: '#fff'
   },
+
   inputStyle: {
     width: '100%',
     marginBottom: 15,

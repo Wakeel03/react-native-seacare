@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../database/firebase';
+import Logo from '../components/Logo';
 
 const SignUp = () => {
   
@@ -60,6 +61,7 @@ const SignUp = () => {
     }    
     return (
       <View style={styles.container}>  
+        <Logo />
         <TextInput
           style={styles.inputStyle}
           placeholder="Name"

@@ -5,8 +5,10 @@ import { db, storage } from '../database/firebase'
 import { FONTS } from '../constants'
 import { Icon } from 'react-native-elements'
 import { getDownloadURL, ref } from 'firebase/storage'
+import { useNavigation } from '@react-navigation/native'
 
 const ReportedIssueCard = ({ issue }) => {
+  const navigation = useNavigation()
   
   const [image, setImage] = useState('')
   
@@ -19,17 +21,9 @@ const ReportedIssueCard = ({ issue }) => {
     }
   }, [])
 
-  const approveIssue = async(id) => {
-    const issuesDoc = doc(db, 'Issues', id)
-
-    await updateDoc(issuesDoc, {
-      is_approved: true
-    })
-
-  }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Issue', { issue })}>
       <Image resizeMode='cover' style={styles.image} source={{ uri: image }} />
       <View style={{flexGrow: 1}}>
           <Text style={styles.title}>{issue.title}</Text>
@@ -41,11 +35,9 @@ const ReportedIssueCard = ({ issue }) => {
             <Text style={styles.location}>{issue.location}</Text>
           </View>
           {/* {url && <Image key={url} style={styles.tinyLogo} source={{ uri: url }} />} */}
-          {/* TODO: Check if admin to show approval button */}
-          {!issue.is_approved && <TouchableOpacity onPress={() => approveIssue(issue.id)}><Text>Approve</Text></TouchableOpacity>}
       </View>
 
-    </View>
+    </TouchableOpacity>
   )
 }
 

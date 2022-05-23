@@ -1,12 +1,14 @@
 import { View, Text,TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { updateDoc } from 'firebase/firestore'
-import { db, storage } from '../database/firebase'
+import { db } from '../database/firebase'
 import { FONTS } from '../constants'
 import { Icon } from 'react-native-elements'
-import { getDownloadURL, ref } from 'firebase/storage'
+import { useNavigation } from '@react-navigation/native'
+import { MONTHS } from '../utils'
 
 const EventsCard = ({ event, backgroundColor }) => {
+  const navigation = useNavigation()
   
   const [image, setImage] = useState('')
 
@@ -17,23 +19,11 @@ const EventsCard = ({ event, backgroundColor }) => {
     })
   }
 
-  const months = {
-    1: 'Jan',
-    2: 'Feb',
-    3: 'Mar',
-    4: 'Apr',
-    5: 'May',
-    6: 'Jun',
-    7: 'Jul',
-    8: 'Aug',
-    9: 'Sep',
-    10: 'Oct',
-    11: 'Nov',
-    12: 'Dec'
-  }
-  
+  const months = MONTHS
+
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={() => navigation.navigate('Event', { event })} style={styles.container}>
       <TouchableOpacity style={[styles.date, { backgroundColor }]} onPress={() => joinEvent(event.id)}>
         <View style={styles.dateContainer}>
             <Text style={styles.day}>{event.datetime.toDate().getDate()}</Text>
@@ -51,7 +41,7 @@ const EventsCard = ({ event, backgroundColor }) => {
             </View>
       </View>
 
-    </View>
+    </TouchableOpacity>
   )
 }
 

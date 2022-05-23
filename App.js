@@ -9,6 +9,9 @@ import Login from "./screens/Login";
 import SignUp from "./screens/SignUp";
 import BottomTabs from "./components/BottomTabs";
 import CameraScreen from "./screens/CameraScreen";
+import ReportLitter from "./screens/ReportLitter";
+import Issue from "./screens/Issue";
+import Event from "./screens/Event";
 
 const theme = {
   ...DefaultTheme,
@@ -42,6 +45,9 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
+        <Stack.Screen name="ReportLittering" component={ReportLitter} />
+        <Stack.Screen name="Issue" component={Issue} />
+        <Stack.Screen name="Event" component={Event} />
         <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -23,6 +23,7 @@ const Events = () => {
     getEvents()
   }, [])
 
+
   const getEvents = async () => {
     const eventsRef = collection(db, 'Events')
     const data = await getDocs(eventsRef)

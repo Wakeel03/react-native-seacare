@@ -10,6 +10,11 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
+"@ant-design/icons-react-native@^2.3.2":
+  "integrity" "sha512-ULCN3+elfAsvu71Xa5KODi97Y3P2aUkJm4s8mJaPoRjiU+BR+Y6ejv3vbc40yV62EOdlAOMKhvKbFlsXMjZ2ow=="
+  "resolved" "https://registry.npmjs.org/@ant-design/icons-react-native/-/icons-react-native-2.3.2.tgz"
+  "version" "2.3.2"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.16.7":
   "integrity" "sha512-iAXqUn8IIeBTNd72xsFlgaXHkMBMt6y4HJp1tIaK465CWLT/fG1aqB7ykr95gHHmlBdGbFeWWfyB4NJJ0nmeIg=="
   "resolved" "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.16.7.tgz"
@@ -5391,7 +5396,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0", "react@>=17.0.1", "react@17.0.1":
+"react@*", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0", "react@>=16.0.0", "react@>=17.0.1", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

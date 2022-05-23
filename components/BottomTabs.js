@@ -45,12 +45,12 @@ const BottomTabs = () => {
           focused ? <View style={styles.activeTabBackground}><Icon name="event" color={color} /></View> : <Icon name="event" color={color}/>
           ),
         }}/>
-
-        <Tab.Screen name="Report Littering" component={ReportLitter} options={{
+{/* 
+        <Tab.Screen name="ReportLittering" component={ReportLitter} options={{
             tabBarIcon: ({ color, focused }) => (
-              focused ? <View style={styles.activeTabBackground}><Icon name="report" color={color} /></View> : <Icon name="report" color={color}/>
+              focused ? <View style={styles.activeTabBackground}><Icon name="money" color={color} /></View> : <Icon name="money" color={color}/>
             ),
-          }}/>
+          }}/> */}
 
       <Tab.Screen name="Reported Issues" component={ReportedIssues} options={{
           tabBarIcon: ({ color, focused }) => (
