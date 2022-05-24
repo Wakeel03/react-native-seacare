@@ -45,6 +45,7 @@ const Home = () => {
 
       <HomeCard title={'Create Community'} iconName='forum' onPress={() => navigation.navigate('CreateCommunity')} />
       <HomeCard title={'Report Littering'} iconName='flag' onPress={() => navigation.navigate('ReportLittering')} />
+      <HomeCard title={'Create a Sensitization Campaign'} iconName='campaign' onPress={() => navigation.navigate('CreateCampaign')} />
 
     </SafeAreaView>
   );

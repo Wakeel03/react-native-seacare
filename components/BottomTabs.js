@@ -7,6 +7,7 @@ import ReportedIssues from '../screens/ReportedIssues';
 import { Icon } from 'react-native-elements'
 import { StyleSheet, View } from 'react-native';
 import { FONTS } from '../constants';
+import SensitizationCampaigns from '../screens/SensitizationCampaigns';
 
 const BottomTabs = () => {
   const Tab = createBottomTabNavigator();
@@ -49,6 +50,11 @@ const BottomTabs = () => {
       <Tab.Screen name="Reported Issues" component={ReportedIssues} options={{
           tabBarIcon: ({ color, focused }) => (
             focused ? <View style={styles.activeTabBackground}><Icon name="report" color={color} /></View> : <Icon name="report" color={color}/>
+          ),
+        }}/>
+        <Tab.Screen name="Campaigns" component={SensitizationCampaigns} options={{
+          tabBarIcon: ({ color, focused }) => (
+            focused ? <View style={styles.activeTabBackground}><Icon name="campaign" color={color} /></View> : <Icon name="campaign" color={color}/>
           ),
         }}/>
         
