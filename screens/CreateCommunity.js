@@ -6,6 +6,7 @@ import { db } from '../database/firebase'
 import { collection, addDoc } from 'firebase/firestore'
 import CustomInput from '../components/CustomInput'
 import ButtonFull from '../components/ButtonFull'
+import StackScreenHeader from '../components/StackScreenHeader'
 
 const CreateCommunity = () => {
   const navigation = useNavigation();
@@ -27,6 +28,7 @@ const CreateCommunity = () => {
 
   return (
     <View style={styles.container}>
+        <StackScreenHeader title='Create Community' />
         <CustomInput
           label={'Name'}
           placeholder="Name"
@@ -56,8 +58,7 @@ const CreateCommunity = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 20,
-    paddingRight: 20
+    padding: 20
   },
   buttonsWrapper: {
     marginTop: 30

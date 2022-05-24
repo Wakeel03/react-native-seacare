@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { View, SafeAreaView, FlatList } from "react-native";
+import { View, SafeAreaView, StyleSheet, Text } from "react-native";
 
 import { NFTCard, HomeHeader, FocusedStatusBar } from "../components";
 import { COLORS, NFTData } from "../constants";
 import { auth } from '../database/firebase';
+import { FONTS } from '../constants'
+import HomeCard from "../components/HomeCard";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const [nftData, setNftData] = useState(NFTData);
+
+  const navigation = useNavigation()
 
   const handleSearch = (value) => {
     if (value.length === 0) {
@@ -32,36 +37,43 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <FocusedStatusBar backgroundColor={COLORS.primary} />
-      <View style={{ flex: 1 }}>
-        <View style={{ zIndex: 0 }}>
-          <FlatList
-            data={nftData}
-            renderItem={({ item }) => <NFTCard data={item} />}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
-          />
-        </View>
-
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            zIndex: -1,
-          }}
-        >
-          <View
-            style={{ height: 300, backgroundColor: COLORS.primary }} />
-          <View style={{ flex: 1, backgroundColor: COLORS.white }} />
-        </View>
+    <SafeAreaView style={{ flex: 1, padding: 20 }}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>SeaCare</Text>
+        <Text style={styles.quote}>- Pollution of the air or of the land all ultimately land up in the sea</Text>
       </View>
+
+      <HomeCard title={'Create Community'} iconName='forum' onPress={() => navigation.navigate('CreateCommunity')} />
+      <HomeCard title={'Report Littering'} iconName='flag' onPress={() => navigation.navigate('ReportLittering')} />
+
     </SafeAreaView>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20
+  },
+
+  headerContainer: {
+    padding: 20,
+    backgroundColor: '#548BDE',
+    borderRadius: 10,
+    marginBottom: 20
+  },
+
+  title: {
+    fontSize: 20,
+    fontFamily: FONTS.regular,
+    color: '#fff',
+    marginBottom: 10
+  },
+
+  quote: {
+    fontSize: 12,
+    fontFamily: FONTS.regular,
+    color: '#fff',
+  }
+})
 
 export default Home;

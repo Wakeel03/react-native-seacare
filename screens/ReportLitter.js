@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import { ref, uploadBytesResumable } from 'firebase/storage'
 import { storage } from '../database/firebase'
@@ -9,13 +8,9 @@ import { collection, addDoc } from 'firebase/firestore'
 import CustomInput from '../components/CustomInput'
 import CustomInputImageCarousel from '../components/CustomInputImageCarousel'
 import ButtonFull from '../components/ButtonFull'
-import { FONTS } from '../constants'
-import { Icon } from 'react-native-elements'
-import { IconFill, IconOutline } from "@ant-design/icons-react-native";
-
+import StackScreenHeader from '../components/StackScreenHeader'
 
 const ReportLitter = () => {
-  const navigation = useNavigation();
   
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   
@@ -102,10 +97,8 @@ const ReportLitter = () => {
 
   return (
     <View style={styles.container}>
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}><Text>{'<'}</Text></TouchableOpacity>
-          <Text style={styles.title}>Report Littering</Text>
-        </View>
+        <StackScreenHeader title={'Report Littering'}/>
+
         <CustomInput label={'Title'} placeholder={'Enter a title'} onChangeText={(newTitle) => setTitle(newTitle)} defaultValue={title}/>
         <CustomInput label={'Description'} placeholder={'Write a description'} onChangeText={(newDescription) => setDescription(newDescription)} defaultValue={description}/>
         <CustomInput label={'Location'} placeholder={'Enter the location'} onChangeText={(newLocation) => setLocation(newLocation)} defaultValue={location}/>
@@ -116,9 +109,6 @@ const ReportLitter = () => {
           <ButtonFull text={'Upload Pictures'} onPress={() => pickImage()} backgroundColor='#626FDB' />
           <ButtonFull text={'Submit'} onPress={() => createIssue()} backgroundColor='#54BD7E' />
         </View>
-        
-        {/* <TouchableOpacity onPress={() => pickImage()}><Text>Open Camera</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => pickImage()}><Text>Open Gallery</Text></TouchableOpacity> */}
     </View>
   )
 }
@@ -127,12 +117,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 20
   },
-  
-  title: {
-    fontSize: 20,
-    fontFamily: FONTS.medium,
-    marginBottom: 20
-  }, 
 
   buttonsWrapper: {
     marginTop: 30

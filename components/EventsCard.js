@@ -1,35 +1,25 @@
 import { View, Text,TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { updateDoc } from 'firebase/firestore'
-import { db } from '../database/firebase'
 import { FONTS } from '../constants'
 import { Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { MONTHS } from '../utils'
 
-const EventsCard = ({ event, backgroundColor }) => {
+const EventsCard = ({ currentUser, event, backgroundColor }) => {
   const navigation = useNavigation()
   
   const [image, setImage] = useState('')
 
-  const joinEvent = async (eventId) => {
-    const eventDocsRef = doc(db, 'Events', eventId)
-    await updateDoc(eventDocsRef, {
-      volunteers: arrayUnion(currentUser)
-    })
-  }
-
   const months = MONTHS
-
-
+  
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Event', { event })} style={styles.container}>
-      <TouchableOpacity style={[styles.date, { backgroundColor }]} onPress={() => joinEvent(event.id)}>
+    <TouchableOpacity onPress={() => navigation.navigate('Event', { currentUser, event })} style={styles.container}>
+      <View style={[styles.date, { backgroundColor }]}> 
         <View style={styles.dateContainer}>
             <Text style={styles.day}>{event.datetime.toDate().getDate()}</Text>
             <Text style={styles.dateYear}>{months[event.datetime.toDate().getMonth()]} {event.datetime.toDate().getFullYear()}</Text>
         </View>
-      </TouchableOpacity>
+      </View>
       <View style={{flexGrow: 1}}>
           <Text style={styles.title}>{event.name}</Text>
           <View style={{flexGrow: 1, flexDirection: 'row'}}>

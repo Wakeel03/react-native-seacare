@@ -23,7 +23,7 @@ const ReportedIssueCard = ({ issue }) => {
 
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Issue', { issue })}>
+    <TouchableOpacity style={[styles.container, { marginBottom: 20 }]} onPress={() => navigation.navigate('Issue', { issue })}>
       <Image resizeMode='cover' style={styles.image} source={{ uri: image }} />
       <View style={{flexGrow: 1}}>
           <Text style={styles.title}>{issue.title}</Text>
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     height: 15,
     display: 'flex',
     alignItems: 'center',
+    marginBottom: 3
   },
   
   description: {

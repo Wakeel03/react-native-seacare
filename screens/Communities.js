@@ -2,13 +2,16 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react'
 import { auth } from '../database/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
-import { arrayUnion, collection, doc, getDocs, updateDoc } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../database/firebase'
 import CommunityCard from '../components/CommunityCard'
 import { FONTS } from '../constants'
 
 const Communities = () => {
-  const [communities, setCommunities] = useState([])
+  const [myCommunities, setMyCommunities] = useState([])
+  const [otherCommunities, setOtherCommunities] = useState([])
+  const [isMyCommunitiesSelected, setIsMyCommunitiesSelected] = useState(false)
+
     const [currentUser, setCurrentUser] = useState(null)
     const colors = ['#548BDE', '#FFC107', '#F44336', '#4CAF50', '#3F51B5']
     
@@ -23,26 +26,39 @@ const Communities = () => {
 
   useEffect(() => {
     getCommunities()
-  }, [])
+  }, [currentUser])
 
   const getCommunities = async () => {
+    if (!currentUser) return
+    
     const communitiesRef = collection(db, 'Communities')
-    const data = await getDocs(communitiesRef)
+    let data = await getDocs(communitiesRef)
+    data = data.docs.map((doc) => ({ ...doc.data(), docId: doc.id }))
+    
+    const _myCommunities = data.filter((community) => community.members.includes(currentUser))
+    const _otherCommunities = data.filter((community) => !community.members.includes(currentUser))
 
-    setCommunities(
-      data.docs.map((doc) => ({ ...doc.data(), docId: doc.id }))
-    )
+    setMyCommunities(_myCommunities)
+    setOtherCommunities(_otherCommunities)
+
   }
+
 
   return (
     <View style={styles.container}>
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.joinAction} onPress={() => {}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Join</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.myCommunities} onPress={() => {}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Communities</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.joinAction} onPress={() => {setIsMyCommunitiesSelected(false)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Join</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.myCommunities} onPress={() => {setIsMyCommunitiesSelected(true)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Communities</Text></TouchableOpacity>
         </View>
-        {communities && communities.map((community, index) => (
-          <CommunityCard key={community.docId} community={community} avatarColor={colors[index % colors.length]} />
-        ))}
+
+        {isMyCommunitiesSelected ? (myCommunities.length > 0 ? myCommunities.map((community, index) => (
+          <CommunityCard key={community.docId} isMember={true} currentUser={currentUser} community={community} avatarColor={colors[index % colors.length]} />
+        )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>You are not part of any community</Text>) 
+        : 
+          otherCommunities.length > 0 ? otherCommunities.map((community, index) => (
+           <CommunityCard key={community.docId} isMember={false} currentUser={currentUser} community={community} avatarColor={colors[index % colors.length]} />
+          )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>No communities found</Text>
+        }
     </View>
   )
 }

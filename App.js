@@ -3,15 +3,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 
-import Home from "./screens/Home";
 import Details from "./screens/Details";
 import Login from "./screens/Login";
 import SignUp from "./screens/SignUp";
 import BottomTabs from "./components/BottomTabs";
-import CameraScreen from "./screens/CameraScreen";
 import ReportLitter from "./screens/ReportLitter";
 import Issue from "./screens/Issue";
 import Event from "./screens/Event";
+import Community from "./screens/Community";
+import CreateCommunity from "./screens/CreateCommunity";
+import CreateEvent from "./screens/CreateEvent";
 
 const theme = {
   ...DefaultTheme,
@@ -48,7 +49,9 @@ const App = () => {
         <Stack.Screen name="ReportLittering" component={ReportLitter} />
         <Stack.Screen name="Issue" component={Issue} />
         <Stack.Screen name="Event" component={Event} />
-        <Stack.Screen name="CameraScreen" component={CameraScreen} />
+        <Stack.Screen name="CreateEvent" component={CreateEvent} />
+        <Stack.Screen name="Community" component={Community} />
+        <Stack.Screen name="CreateCommunity" component={CreateCommunity} />
       </Stack.Navigator>
     </NavigationContainer>
   );

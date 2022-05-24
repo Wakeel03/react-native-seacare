@@ -31,7 +31,10 @@ const ReportedIssues = () => {
   return (
     <View style={styles.container}>
        {issues && issues.map(issue => (
-         <ReportedIssueCard issue={issue} key={issue.id} />
+         <>
+          <ReportedIssueCard issue={issue} key={issue.id} />
+          <View style={styles.divider}></View>
+         </>
         ))}
         <View style={styles.buttonContainer}>
           <ButtonFull onPress={() => navigation.navigate('ReportLittering')} text={'Report Littering'} backgroundColor='#626FDB' />
@@ -46,6 +49,12 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     height: '100%',
     marginBottom: 20,
+  },
+  
+  divider: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+    width: '100%'
   },
   
   buttonContainer: {
