@@ -61,7 +61,7 @@ const BottomTabs = () => {
 const styles = StyleSheet.create({
   activeTabBackground: {
     padding: 5,
-    backgroundColor: '#000',
+    backgroundColor: '#548BDE',
     borderRadius: 5,
   }
 })

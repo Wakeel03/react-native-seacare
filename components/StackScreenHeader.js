@@ -8,8 +8,8 @@ const StackScreenHeader = ({ title }) => {
   const navigation = useNavigation()
     
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-        <Pressable onPress={() => navigation.goBack()}><Icon name='chevron-left' size={18} /></Pressable>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 24 }}>
+        <Pressable onPress={() => navigation.goBack()}><Icon name='chevron-left' size={16} /></Pressable>
         <Text style={styles.title}>{ title }</Text>
     </View>
   )
@@ -17,8 +17,8 @@ const StackScreenHeader = ({ title }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
-    fontFamily: FONTS.medium,
+    fontSize: 16,
+    fontFamily: FONTS.semiBold,
     marginLeft: 12
   }, 
 })

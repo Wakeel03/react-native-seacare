@@ -43,20 +43,19 @@ const Communities = () => {
 
   }
 
-
   return (
     <View style={styles.container}>
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.joinAction} onPress={() => {setIsMyCommunitiesSelected(false)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Join</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.myCommunities} onPress={() => {setIsMyCommunitiesSelected(true)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Communities</Text></TouchableOpacity>
+          <TouchableOpacity style={[styles.joinAction, !isMyCommunitiesSelected ? { backgroundColor: '#83ACEA' } : {}]} onPress={() => {setIsMyCommunitiesSelected(false)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Join</Text></TouchableOpacity>
+          <TouchableOpacity style={[styles.myCommunities, isMyCommunitiesSelected ? { backgroundColor: '#7ECDD2' } : {}]} onPress={() => {setIsMyCommunitiesSelected(true)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Communities</Text></TouchableOpacity>
         </View>
 
         {isMyCommunitiesSelected ? (myCommunities.length > 0 ? myCommunities.map((community, index) => (
-          <CommunityCard key={community.docId} isMember={true} currentUser={currentUser} community={community} avatarColor={colors[index % colors.length]} />
+          <CommunityCard key={community.docId} isMember={true} community={community} backgroundColor={colors[index % colors.length]} />
         )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>You are not part of any community</Text>) 
         : 
           otherCommunities.length > 0 ? otherCommunities.map((community, index) => (
-           <CommunityCard key={community.docId} isMember={false} currentUser={currentUser} community={community} avatarColor={colors[index % colors.length]} />
+           <CommunityCard key={community.docId} isMember={false} community={community} backgroundColor={colors[index % colors.length]} />
           )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>No communities found</Text>
         }
     </View>

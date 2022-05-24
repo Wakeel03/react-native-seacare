@@ -12,6 +12,7 @@ const CreateCommunity = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [members, setMembers] = useState([]);
 
@@ -19,8 +20,9 @@ const CreateCommunity = () => {
     const communitiesRef = collection(db, 'Communities')
     
     await addDoc(communitiesRef, {
-      createdBy,
       name,
+      createdBy,
+      description,
       members
     })
 
@@ -34,6 +36,12 @@ const CreateCommunity = () => {
           placeholder="Name"
           onChangeText={newName => setName(newName)}
           defaultValue={name}
+        />
+        <CustomInput
+          label={'Description'}
+          placeholder="Description"
+          onChangeText={newDescription => setDescription(newDescription)}
+          defaultValue={description}
         />
         <CustomInput
           label={'Created By'}

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import { getDownloadURL, listAll, ref } from 'firebase/storage';
-import { storage } from '../database/firebase'
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../database/firebase'
 import ReportedIssueCard from '../components/ReportedIssueCard';
@@ -31,10 +29,10 @@ const ReportedIssues = () => {
   return (
     <View style={styles.container}>
        {issues && issues.map(issue => (
-         <>
-          <ReportedIssueCard issue={issue} key={issue.id} />
+         <View key={issue.id}>
+          <ReportedIssueCard issue={issue} />
           <View style={styles.divider}></View>
-         </>
+         </View>
         ))}
         <View style={styles.buttonContainer}>
           <ButtonFull onPress={() => navigation.navigate('ReportLittering')} text={'Report Littering'} backgroundColor='#626FDB' />

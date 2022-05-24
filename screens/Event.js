@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MONTHS } from '../utils'
 import { arrayUnion, collection, doc, getDocs, query, where } from 'firebase/firestore'
@@ -6,6 +6,9 @@ import { updateDoc } from 'firebase/firestore'
 import { db } from '../database/firebase'
 import StackScreenHeader from '../components/StackScreenHeader'
 import ButtonFull from '../components/ButtonFull'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { FONTS } from '../constants'
+import MinimalCard from '../components/MinimalCard'
 
 const Event = ({ route, navigation }) => {
 
@@ -49,18 +52,38 @@ const Event = ({ route, navigation }) => {
     isAttendBtnVisible(false)
   }
 
+  const colors = [
+    '#7ECDD2',
+    '#83ACEA'
+  ]
+
   return (
     <View style={{ padding: 20, justifyContent: 'space-between', height: '100%' }}>
       <View>
         <StackScreenHeader title={event.name} />
-        <Text>{event.datetime.toDate().getDate()}</Text>
-        <Text>{months[event.datetime.toDate().getMonth()]} {event.datetime.toDate().getFullYear()}</Text>
-        <Text>{event.name}</Text>
-        <Text>{event.description}</Text>
-        <Text>{event.location}</Text>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+          <Text style={styles.date}>Date</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name='event' size={15} color='#548BDE'/>
+            <Text style={styles.dateText}>{event.datetime.toDate().getDate()} {months[event.datetime.toDate().getMonth()]} {event.datetime.toDate().getFullYear()} {event.datetime.toDate().getHours()}:{`${event.datetime.toDate().getMinutes()}0`.slice(0, 2)}</Text>
+          </View>
+        </View>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+          <Text style={styles.location}>Location</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name='place' size={15} color='#548BDE'/>
+            <Text style={styles.locationText}>{event.location}</Text>
+          </View>
+        </View>
+
+        <Text style={styles.description}>{event.description}</Text>
+
+        <Text style={styles.volunteers}>Volunteers</Text>
         {
-          volunteers.map((volunteer) => (
-              <Text key={volunteer.docId}>{volunteer.displayName}</Text>
+          volunteers.map((volunteer, index) => (
+              <MinimalCard key={volunteer.docId} mainText={volunteer.displayName} backgroundColor={colors[index % colors.length]} />
           ))
         }
 
@@ -71,5 +94,44 @@ const Event = ({ route, navigation }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  date: {
+    fontFamily: FONTS.medium,
+    fontSize: 15,
+    marginRight: 12
+  },
+  
+  location: {
+    fontFamily: FONTS.medium,
+    fontSize: 15,
+    marginRight: 12
+  },
+  
+  volunteers: {
+    fontFamily: FONTS.medium,
+    fontSize: 15,
+    marginBottom: 8
+  },
+
+  dateText: {
+    marginLeft: 6,
+    fontFamily: FONTS.regular,
+    fontSize: 14
+  },
+
+  locationText: {
+    marginLeft: 6,
+    fontFamily: FONTS.regular,
+    fontSize: 14
+  },
+
+  description: {
+    fontFamily: FONTS.regular,
+    fontSize: 12,
+    marginBottom: 20
+  }
+
+})
 
 export default Event

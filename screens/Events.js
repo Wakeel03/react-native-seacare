@@ -49,17 +49,17 @@ const Events = () => {
   return (
     <View style={styles.container}>
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.attendingEvents} onPress={() => {setIsAttendingEventsSelected(true)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Events</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.otherEvents} onPress={() => {setIsAttendingEventsSelected(false)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Other Events</Text></TouchableOpacity>
+          <TouchableOpacity style={[styles.attendingEvents, isAttendingEventsSelected ? { backgroundColor: '#7ECDD2' } : {}]} onPress={() => {setIsAttendingEventsSelected(true)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Events</Text></TouchableOpacity>
+          <TouchableOpacity style={[styles.otherEvents, !isAttendingEventsSelected ? { backgroundColor: '#83ACEA'} : {}]} onPress={() => {setIsAttendingEventsSelected(false)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>Other Events</Text></TouchableOpacity>
         </View>
       
         {isAttendingEventsSelected ? (myEvents.length > 0 ? myEvents.map((event, index) => (
-            <>
-              <View key={event.docId} style={styles.cards}>
+            <View key={event.docId}>
+              <View style={styles.cards}>
                 <EventsCard currentUser={currentUser} event={event} backgroundColor={colors[index % colors.length]} />
               </View>  
               <View style={styles.divider}></View>
-            </>
+            </View>
         )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>No events to show</Text>) 
         
         : (otherEvents.length > 0 ? otherEvents.map((event, index) => (
