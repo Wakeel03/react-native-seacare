@@ -13,7 +13,7 @@ const SensitizationCampaignCard = ({ campaign }) => {
   const [image, setImage] = useState('')
   
   useEffect(() => {
-    if (issue.images[0]) {
+    if (campaign.images[0]) {
         let imageRef = ref(storage, `report_litter/${issue.images[0]}`)
         getDownloadURL(imageRef).then((url) => {
         setImage(url)
@@ -24,15 +24,15 @@ const SensitizationCampaignCard = ({ campaign }) => {
 
   return (
     <TouchableOpacity style={[styles.container, { marginBottom: 20 }]} onPress={() => navigation.navigate('Campaign', { campaign })}>
-      {/* <Image resizeMode='cover' style={styles.image} source={{ uri: image }} /> */}
+      <Image resizeMode='cover' style={styles.image} source={{ uri: image }} />
       <View style={{flexGrow: 1}}>
-          <Text style={styles.title}>{issue.title}</Text>
+          <Text style={styles.title}>{campaign.title}</Text>
           <View style={{flexGrow: 1, flexDirection: 'row'}}>
-            <Text style={styles.description}>{issue.description}</Text>
+            <Text style={styles.description}>{campaign.description}</Text>
           </View>
           <View style={styles.container}>
             <Icon name='place' color='#548BDE'/>
-            <Text style={styles.location}>{issue.location}</Text>
+            <Text style={styles.location}>{campaign.location}</Text>
           </View>
           {/* {url && <Image key={url} style={styles.tinyLogo} source={{ uri: url }} />} */}
       </View>
@@ -62,8 +62,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 1,
     height: 30,
+    overflow: 'hidden',
     display: 'flex',
-    alignItems: 'center',
+    // alignItems: 'center',
     lineHeight: 14,
     marginTop: 5,
     marginBottom: 5

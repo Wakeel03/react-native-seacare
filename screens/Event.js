@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MONTHS } from '../utils'
-import { arrayUnion, collection, doc, getDocs, query, where } from 'firebase/firestore'
+import { arrayUnion, collection, doc, getDocs, getDoc, increment, query, where } from 'firebase/firestore'
 import { updateDoc } from 'firebase/firestore'
 import { db } from '../database/firebase'
 import StackScreenHeader from '../components/StackScreenHeader'
@@ -15,7 +15,8 @@ const Event = ({ route, navigation }) => {
     const { currentUser, event } = route.params
     const months = MONTHS
     const [volunteers, setVolunteers] = useState([])
-    const [isAttendBtnVisible, setIsAttendBtnVisible] = useState(false)
+    const [isAttendBtnVisible, setIsAttendBtnVisible] = useState(true)
+    const eventPoint = 10
 
   useEffect(() => {
     getVolunteersList()
@@ -40,7 +41,7 @@ const Event = ({ route, navigation }) => {
     //Check if user in volunteers list
     console.log(volunteers)
     const isUserInVolunteersList = volunteers.find(volunteer => volunteer.uid == currentUser)
-    if (!isUserInVolunteersList) setIsAttendBtnVisible(true)
+    if (isUserInVolunteersList) setIsAttendBtnVisible(false)
 
   }, [volunteers])
 
@@ -49,7 +50,16 @@ const Event = ({ route, navigation }) => {
     await updateDoc(eventDocsRef, {
       volunteers: arrayUnion(currentUser)
     })
-    isAttendBtnVisible(false)
+
+    const userRef = query(collection(db, 'Users'), where('uid', '==', currentUser))
+    const userDoc = await getDocs(userRef)
+    console.log(userDoc)
+    const userDocId = userDoc.docs[0].id
+    await updateDoc(doc(db, 'Users', userDocId), {
+      points: increment(eventPoint)
+    })
+    setIsAttendBtnVisible(false)
+    navigation.navigate('Home')
   }
 
   const colors = [

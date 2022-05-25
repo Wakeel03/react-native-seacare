@@ -9,10 +9,12 @@ import CustomInput from '../components/CustomInput'
 import CustomInputImageCarousel from '../components/CustomInputImageCarousel'
 import ButtonFull from '../components/ButtonFull'
 import StackScreenHeader from '../components/StackScreenHeader'
+import { useNavigation } from '@react-navigation/native'
 
 const CreateCampaign = () => {
   
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const navigation = useNavigation()
   
   const [title, setTitle] = useState('');
   const [pictures, setPictures] = useState([]);
@@ -72,6 +74,8 @@ const CreateCampaign = () => {
       title
 
     })
+
+    navigation.navigate('Home')
 
   }
 

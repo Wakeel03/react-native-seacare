@@ -51,6 +51,7 @@ const Campaign = ({ route, navigation }) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon name='place' size={15} color='#548BDE'/>
+            <Text style={styles.location}>{campaign.location}</Text>
           </View>
         </View>
 
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   location: {
     fontFamily: FONTS.medium,
     fontSize: 15,
-    marginRight: 12
+    marginLeft: 12
   },
   
   images: {
