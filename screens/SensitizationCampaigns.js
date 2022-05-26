@@ -52,7 +52,8 @@ const SensitizationCampaigns = () => {
     divider: {
       height: 1,
       backgroundColor: '#E0E0E0',
-      width: '100%'
+      width: '100%',
+      marginBottom: 20
     },
     
     buttonContainer: {

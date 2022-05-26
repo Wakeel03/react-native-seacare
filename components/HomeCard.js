@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#fff',
     marginLeft: 12,
     fontFamily: FONTS.regular

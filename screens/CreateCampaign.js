@@ -19,6 +19,7 @@ const CreateCampaign = () => {
   const [title, setTitle] = useState('');
   const [pictures, setPictures] = useState([]);
   const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -87,7 +88,7 @@ const CreateCampaign = () => {
       pictures.forEach(async (picture) => {
         const imageRef = ref(storage, `create_campaign/${Date.now()}`)
         const res = await uploadBytesResumable(imageRef, picture.blob)
-        imageNames = [...imagesNames, res.metadata.name]
+        imageNames = [...imageNames, res.metadata.name]
       })
       
       return imageNames
@@ -103,6 +104,7 @@ const CreateCampaign = () => {
 
         <CustomInput label={'Title'} placeholder={'Enter a title'} onChangeText={(newTitle) => setTitle(newTitle)} defaultValue={title}/>
         <CustomInput label={'Description'} placeholder={'Write a description'} onChangeText={(newDescription) => setDescription(newDescription)} defaultValue={description}/>
+        <CustomInput label={'Location'} placeholder={'Write a location'} onChangeText={(newLocation) => setLocation(newLocation)} defaultValue={location}/>
         
         {pictures && <CustomInputImageCarousel pictures={pictures} size={50}/>}
         

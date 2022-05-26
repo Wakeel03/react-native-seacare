@@ -14,7 +14,7 @@ const SensitizationCampaignCard = ({ campaign }) => {
   
   useEffect(() => {
     if (campaign.images[0]) {
-        let imageRef = ref(storage, `report_litter/${issue.images[0]}`)
+        let imageRef = ref(storage, `create_campaign/${campaign.images[0]}`)
         getDownloadURL(imageRef).then((url) => {
         setImage(url)
       })
