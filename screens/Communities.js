@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { useState, useEffect } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, RefreshControl } from 'react-native'
+import { useState, useEffect, useCallback } from 'react'
 import { auth } from '../database/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../database/firebase'
 import CommunityCard from '../components/CommunityCard'
 import { FONTS } from '../constants'
@@ -11,18 +11,24 @@ const Communities = () => {
   const [myCommunities, setMyCommunities] = useState([])
   const [otherCommunities, setOtherCommunities] = useState([])
   const [isMyCommunitiesSelected, setIsMyCommunitiesSelected] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
-    const [currentUser, setCurrentUser] = useState(null)
-    const colors = ['#548BDE', '#FFC107', '#F44336', '#4CAF50', '#3F51B5']
+  const [currentUser, setCurrentUser] = useState(null)
+  const colors = ['#548BDE', '#FFC107', '#F44336', '#4CAF50', '#3F51B5']
     
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            setCurrentUser(uid)
-        } else {
-            console.log('User is signed out!')
-        }
-});
+  onAuthStateChanged(auth, (user) => {
+      if (user) {
+          const uid = user.uid;
+          setCurrentUser(uid)
+      } else {
+          console.log('User is signed out!')
+      }
+  });
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getCommunities().then(() => setRefreshing(false));
+  }, [])
 
   useEffect(() => {
     getCommunities()
@@ -50,14 +56,19 @@ const Communities = () => {
           <TouchableOpacity style={[styles.myCommunities, isMyCommunitiesSelected ? { backgroundColor: '#7ECDD2' } : {}]} onPress={() => {setIsMyCommunitiesSelected(true)}}><Text style={{ fontFamily: FONTS.medium, fontSize: 12  }}>My Communities</Text></TouchableOpacity>
         </View>
 
-        {isMyCommunitiesSelected ? (myCommunities.length > 0 ? myCommunities.map((community, index) => (
-          <CommunityCard key={community.docId} isMember={true} community={community} backgroundColor={colors[index % colors.length]} />
-        )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>You are not part of any community</Text>) 
-        : 
-          otherCommunities.length > 0 ? otherCommunities.map((community, index) => (
-           <CommunityCard key={community.docId} isMember={false} community={community} backgroundColor={colors[index % colors.length]} />
-          )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>No communities found</Text>
-        }
+        <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+          
+          {isMyCommunitiesSelected ? (myCommunities.length > 0 ? myCommunities.map((community, index) => (
+            <CommunityCard key={community.docId} isMember={true} community={community} backgroundColor={colors[index % colors.length]} />
+          )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>You are not part of any community</Text>) 
+          
+          : 
+            otherCommunities.length > 0 ? otherCommunities.map((community, index) => (
+            <CommunityCard key={community.docId} isMember={false} community={community} backgroundColor={colors[index % colors.length]} />
+            )) : <Text style={{ fontFamily: FONTS.medium, fontSize: 18, textAlign: 'center', marginTop: 20 }}>No communities found</Text>
+          }
+
+        </ScrollView>
     </View>
   )
 }

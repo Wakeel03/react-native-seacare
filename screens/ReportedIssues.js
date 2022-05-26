@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { useCallback, useEffect, useState } from 'react'
+import { View, StyleSheet, RefreshControl, ScrollView, SafeAreaView } from 'react-native'
 import React from 'react'
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../database/firebase'
@@ -7,11 +7,15 @@ import ReportedIssueCard from '../components/ReportedIssueCard';
 import { useNavigation } from '@react-navigation/native';
 import ButtonFull from '../components/ButtonFull';
 
-
 const ReportedIssues = () => {
   const [issues, setIssues] = useState([])
   const navigation = useNavigation()
+  const [refreshing, setRefreshing] = useState(false)
   
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getIssues().then(() => setRefreshing(false));
+  }, [])
     
   useEffect(() => {
     //TODO: Check if approved if not admin
@@ -28,15 +32,18 @@ const ReportedIssues = () => {
 
   return (
     <View style={styles.container}>
-       {issues && issues.map(issue => (
-         <View key={issue.id}>
-          <ReportedIssueCard issue={issue} />
-          <View style={styles.divider}></View>
-         </View>
-        ))}
-        <View style={styles.buttonContainer}>
+       <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        {issues && issues.map(issue => (
+          <View key={issue.id}>
+            <ReportedIssueCard issue={issue} />
+            <View style={styles.divider}></View>
+          </View>
+          ))}
+       </ScrollView>
+
+        {/* <View style={styles.buttonContainer}> */}
           <ButtonFull onPress={() => navigation.navigate('ReportLittering')} text={'Report Littering'} backgroundColor='#626FDB' />
-        </View>
+        {/* </View> */}
     </View>
   )
 }
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     height: '100%',
-    marginBottom: 20,
+    marginBottom: 100,
   },
   
   divider: {

@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import { FONTS } from '../constants';
 
 const Logo = () => {
   return (
-    <View>
+    <View style={{ width: '100%', alignItems: 'center'  }}>
+        <Image source={require('../assets/images/SeaCareLogo.png')} style={{ marginBottom: 20, width: 80, height: 80  }} resizeMode='cover'/>
         <Text style={styles.name}>SeaCare</Text>
     </View>
   )

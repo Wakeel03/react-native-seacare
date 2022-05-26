@@ -1,15 +1,19 @@
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, Pressable } from 'react-native'
 import React from 'react'
 import { FONTS } from '../constants'
+import { useNavigation } from '@react-navigation/native'
 
 const CustomInputImageCarousel = ({ pictures, size}) => {
+  const navigation = useNavigation()
+
   return (
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>Images</Text>
         <FlatList 
         data={pictures}
         renderItem={({ item: picture }) => (
-            <View
+            <Pressable
+            onPress={() => navigation.navigate('ImageViewer', { picture })}
             style={{
               flex: 1,
               flexDirection: 'column',
@@ -18,7 +22,7 @@ const CustomInputImageCarousel = ({ pictures, size}) => {
             }}>
                 {size ? <Image source={{ uri: picture.uri }} style={[styles.image, { width: size, height: size  }]} resizeMode='cover'/> :
                 <Image source={{ uri: picture.uri }} style={[styles.image, { width: size, height: size  }]} resizeMode='cover'/>}
-            </View>
+            </Pressable>
         )}
         style={styles.carouselWrapper}
         numColumns={size ? 3 : 5}

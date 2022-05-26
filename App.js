@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import { LogBox } from 'react-native';
 
 import Details from "./screens/Details";
 import Login from "./screens/Login";
@@ -17,6 +18,7 @@ import CreateCampaign from "./screens/CreateCampaign";
 import Campaign from "./screens/Campaign";
 import Donate from "./screens/Donate";
 import DonateCommunity from "./screens/DonateCommunity";
+import ImageViewer from "./screens/ImageViewer";
 
 const theme = {
   ...DefaultTheme,
@@ -29,6 +31,9 @@ const theme = {
 const Stack = createStackNavigator();
 
 const App = () => {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+
   const [loaded] = useFonts({
     PoppinsSemiBold: require("./assets/fonts/Poppins-SemiBold.ttf"),
     PoppinsMedium: require("./assets/fonts/Poppins-Medium.ttf"),
@@ -45,7 +50,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Login"
+        initialRouteName="BottomTabs"
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
@@ -60,6 +65,7 @@ const App = () => {
         <Stack.Screen name="Campaign" component={Campaign} />
         <Stack.Screen name="Donate" component={Donate} />
         <Stack.Screen name="DonateCommunity" component={DonateCommunity} />
+        <Stack.Screen name="ImageViewer" component={ImageViewer} />
       </Stack.Navigator>
     </NavigationContainer>
   );
