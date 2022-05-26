@@ -45,7 +45,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="BottomTabs"
+        initialRouteName="Login"
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
