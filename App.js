@@ -15,6 +15,8 @@ import CreateCommunity from "./screens/CreateCommunity";
 import CreateEvent from "./screens/CreateEvent";
 import CreateCampaign from "./screens/CreateCampaign";
 import Campaign from "./screens/Campaign";
+import Donate from "./screens/Donate";
+import DonateCommunity from "./screens/DonateCommunity";
 
 const theme = {
   ...DefaultTheme,
@@ -56,6 +58,8 @@ const App = () => {
         <Stack.Screen name="CreateCommunity" component={CreateCommunity} />
         <Stack.Screen name="CreateCampaign" component={CreateCampaign} />
         <Stack.Screen name="Campaign" component={Campaign} />
+        <Stack.Screen name="Donate" component={Donate} />
+        <Stack.Screen name="DonateCommunity" component={DonateCommunity} />
       </Stack.Navigator>
     </NavigationContainer>
   );
