@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     fontFamily: FONTS.semiBold,
-    height: 15,
     display: 'flex',
     alignItems: 'center',
     marginBottom: 3
