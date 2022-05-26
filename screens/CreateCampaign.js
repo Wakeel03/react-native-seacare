@@ -104,7 +104,7 @@ const CreateCampaign = () => {
         <CustomInput label={'Title'} placeholder={'Enter a title'} onChangeText={(newTitle) => setTitle(newTitle)} defaultValue={title}/>
         <CustomInput label={'Description'} placeholder={'Write a description'} onChangeText={(newDescription) => setDescription(newDescription)} defaultValue={description}/>
         
-        {pictures && <CustomInputImageCarousel pictures={pictures}/>}
+        {pictures && <CustomInputImageCarousel pictures={pictures} size={50}/>}
         
         <View style={styles.buttonsWrapper}>
           <ButtonFull text={'Upload Pictures'} onPress={() => pickImage()} backgroundColor='#626FDB' />

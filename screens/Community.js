@@ -31,6 +31,8 @@ const Community = ({ route, navigation }) => {
     await updateDoc(communityDocsRef, {
       members: arrayUnion(currentUser)
     })
+    
+    navigation.navigate('Home')
   }
 
   const colors = [
@@ -54,7 +56,11 @@ const Community = ({ route, navigation }) => {
         }
 
       </View>
-      <ButtonFull text='Create Event' backgroundColor='#548BDE' onPress={() => navigation.navigate('CreateEvent', { isMember, community })} />
+      {isMember ? 
+          <ButtonFull text='Create Event' backgroundColor='#548BDE' onPress={() => navigation.navigate('CreateEvent', { isMember, community })} />
+        :
+          <ButtonFull text='Join' backgroundColor='#548BDE' onPress={() => joinCommunity()} />
+        }
     </View>
 
     

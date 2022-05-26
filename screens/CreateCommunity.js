@@ -26,6 +26,8 @@ const CreateCommunity = () => {
       members
     })
 
+    navigation.navigate('Home')
+
   }
 
   return (

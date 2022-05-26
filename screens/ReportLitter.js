@@ -50,6 +50,7 @@ const ReportLitter = () => {
         xhr.send(null);
       })
       
+      console.log(result.uri)
       setPictures([...pictures, {
         blob,
         uri: result.uri
@@ -103,7 +104,7 @@ const ReportLitter = () => {
         <CustomInput label={'Description'} placeholder={'Write a description'} onChangeText={(newDescription) => setDescription(newDescription)} defaultValue={description}/>
         <CustomInput label={'Location'} placeholder={'Enter the location'} onChangeText={(newLocation) => setLocation(newLocation)} defaultValue={location}/>
         
-        {pictures && <CustomInputImageCarousel pictures={pictures}/>}
+        {pictures && <CustomInputImageCarousel pictures={pictures} size={50}/>}
         
         <View style={styles.buttonsWrapper}>
           <ButtonFull text={'Upload Pictures'} onPress={() => pickImage()} backgroundColor='#626FDB' />
