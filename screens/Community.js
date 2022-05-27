@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { View, Text, Pressable, StyleSheet, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { db } from '../database/firebase'
@@ -41,7 +41,7 @@ const Community = ({ route, navigation }) => {
   ]
 
   return (
-    <View style={{ padding: 20, justifyContent: 'space-between', height: '100%' }}>
+    <SafeAreaView style={{ padding: 20, justifyContent: 'space-between', height: '100%', marginTop: 15 }}>
       <View>
         <StackScreenHeader title={community.name} />
 
@@ -61,7 +61,7 @@ const Community = ({ route, navigation }) => {
         :
           <ButtonFull text='Join' backgroundColor='#548BDE' onPress={() => joinCommunity()} />
         }
-    </View>
+    </SafeAreaView>
 
     
   )

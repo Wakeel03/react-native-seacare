@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MONTHS } from '../utils'
 import { arrayUnion, collection, doc, getDocs, getDoc, increment, query, where } from 'firebase/firestore'
@@ -53,7 +53,7 @@ const Event = ({ route, navigation }) => {
 
     const userRef = query(collection(db, 'Users'), where('uid', '==', currentUser))
     const userDoc = await getDocs(userRef)
-    console.log(userDoc)
+    
     const userDocId = userDoc.docs[0].id
     await updateDoc(doc(db, 'Users', userDocId), {
       points: increment(eventPoint)
@@ -68,7 +68,7 @@ const Event = ({ route, navigation }) => {
   ]
 
   return (
-    <View style={{ padding: 20, justifyContent: 'space-between', height: '100%' }}>
+    <SafeAreaView style={{ padding: 20, justifyContent: 'space-between', height: '100%', marginTop: 15 }}>
       <View>
         <StackScreenHeader title={event.name} />
 
@@ -101,7 +101,7 @@ const Event = ({ route, navigation }) => {
 
       {isAttendBtnVisible ? <ButtonFull text={'Attend Event'} onPress={joinEvent} backgroundColor='#626FDB' /> : null}
 
-    </View>
+    </SafeAreaView>
   )
 }
 

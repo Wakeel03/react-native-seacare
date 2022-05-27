@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 import { useState, useEffect } from 'react'
 import { auth } from '../database/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -39,18 +39,19 @@ const Donate = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <StackScreenHeader title="Bring your support to Communities" />
         {communities.map((community, index) => (
             <CommunityCard key={community.docId} onPress={() => navigation.navigate('DonateCommunity', { community })}  isMember={true} community={community} backgroundColor={colors[index % colors.length]} />
         ))}    
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
+    marginTop: 15
   },
 
   title: {

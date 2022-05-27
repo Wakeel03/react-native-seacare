@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Alert } from 'react-native'
+import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native'
 import { useState } from 'react'
 import StackScreenHeader from '../components/StackScreenHeader'
 import CustomInput from '../components/CustomInput'
@@ -10,7 +10,7 @@ const DonateCommunity = ( { route, navigation }) => {
   const [amount, setAmount] = useState(0)
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <StackScreenHeader title={`Donate to ${community.name}`} />
 
         <CustomInput
@@ -33,13 +33,14 @@ const DonateCommunity = ( { route, navigation }) => {
                 {text: 'OK', onPress: () => navigation.navigate('Home')},  
             ] 
         );  }} backgroundColor='#626FDB' /> */}
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 20,
+        marginTop: 15
     }
 })
 

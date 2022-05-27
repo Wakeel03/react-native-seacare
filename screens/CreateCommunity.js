@@ -1,4 +1,4 @@
-import { View, TextInput, Text, StyleSheet } from 'react-native'
+import { View, TextInput, Text, StyleSheet, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
@@ -31,7 +31,7 @@ const CreateCommunity = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <StackScreenHeader title='Create Community' />
         <CustomInput
           label={'Name'}
@@ -62,13 +62,14 @@ const CreateCommunity = () => {
           <ButtonFull onPress={createCommunity} text={'Add Members'} backgroundColor='#626FDB' />
           <ButtonFull onPress={createCommunity} text='Create' backgroundColor='#54BD7E'/>
         </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
+    marginTop: 15
   },
   buttonsWrapper: {
     marginTop: 30

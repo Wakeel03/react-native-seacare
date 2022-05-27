@@ -31,7 +31,7 @@ const ReportedIssues = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
        <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         {issues && issues.map(issue => (
           <View key={issue.id}>
@@ -44,7 +44,7 @@ const ReportedIssues = () => {
         {/* <View style={styles.buttonContainer}> */}
           <ButtonFull onPress={() => navigation.navigate('ReportLittering')} text={'Report Littering'} backgroundColor='#626FDB' />
         {/* </View> */}
-    </View>
+    </SafeAreaView>
   )
 }
 

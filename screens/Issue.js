@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import { useState, useEffect } from 'react'
 import StackScreenHeader from '../components/StackScreenHeader';
 import ButtonFull from '../components/ButtonFull';
@@ -12,7 +12,6 @@ const Issue = ({ route, navigation }) => {
 
   const { issue } = route.params;
   const [pictures, setPictures] = useState([])
-  
 
   useEffect(() => {
     getPictures()
@@ -44,7 +43,7 @@ const Issue = ({ route, navigation }) => {
   }
     
   return (
-    <View style={{ padding: 20, justifyContent: 'space-between', height: '100%' }}>
+    <SafeAreaView style={{ padding: 20, justifyContent: 'space-between', height: '100%', marginTop: 15 }}>
       <View>
         <StackScreenHeader title={issue.title} />
 
@@ -53,6 +52,22 @@ const Issue = ({ route, navigation }) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon name='place' size={15} color='#548BDE'/>
             <Text style={styles.locationText}>{issue.location}</Text>
+          </View>
+        </View>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+          <Text style={styles.location}>pH Water</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name='science' size={15} color='#548BDE'/>
+            <Text style={styles.locationText}>{issue.ph || 'N/A'}</Text>
+          </View>
+        </View>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+          <Text style={styles.location}>Nitrate Level</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name='biotech' size={15} color='#548BDE'/>
+            <Text style={styles.locationText}>{issue.nitrateLevel || 'N/A'} ppm</Text>
           </View>
         </View>
 
@@ -71,7 +86,7 @@ const Issue = ({ route, navigation }) => {
       {/* {isAttendBtnVisible ? <ButtonFull text={'Attend Event'} onPress={joinEvent} backgroundColor='#626FDB' /> : null} */}
       {!issue.is_approved && <ButtonFull onPress={() => approveIssue(issue.id)} text='Approve' backgroundColor='#548BDE' />}
 
-    </View>
+    </SafeAreaView>
   )
 }
 

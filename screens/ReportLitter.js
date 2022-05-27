@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { ref, uploadBytesResumable } from 'firebase/storage'
@@ -9,8 +9,10 @@ import CustomInput from '../components/CustomInput'
 import CustomInputImageCarousel from '../components/CustomInputImageCarousel'
 import ButtonFull from '../components/ButtonFull'
 import StackScreenHeader from '../components/StackScreenHeader'
+import { useNavigation } from '@react-navigation/native'
 
 const ReportLitter = () => {
+  const navigation = useNavigation()
   
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   
@@ -76,6 +78,8 @@ const ReportLitter = () => {
 
     })
 
+    navigation.navigate('Home')
+
   }
 
   const sendPictures = async() => {
@@ -86,7 +90,7 @@ const ReportLitter = () => {
       pictures.forEach(async (picture) => {
         const imageRef = ref(storage, `report_litter/${Date.now()}`)
         const res = await uploadBytesResumable(imageRef, picture.blob)
-        imageNames = [...imagesNames, res.metadata.name]
+        imageNames = [...imageNames, res.metadata.name]
       })
       
       return imageNames
@@ -97,7 +101,7 @@ const ReportLitter = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <StackScreenHeader title={'Report Littering'}/>
 
         <CustomInput label={'Title'} placeholder={'Enter a title'} onChangeText={(newTitle) => setTitle(newTitle)} defaultValue={title}/>
@@ -110,13 +114,14 @@ const ReportLitter = () => {
           <ButtonFull text={'Upload Pictures'} onPress={() => pickImage()} backgroundColor='#626FDB' />
           <ButtonFull text={'Submit'} onPress={() => createIssue()} backgroundColor='#54BD7E' />
         </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
+    marginTop: 15
   },
 
   buttonsWrapper: {

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import { useState, useEffect } from 'react'
 import StackScreenHeader from '../components/StackScreenHeader';
 import ButtonFull from '../components/ButtonFull';
@@ -44,7 +44,7 @@ const Campaign = ({ route, navigation }) => {
   }
     
   return (
-    <View style={{ padding: 20, justifyContent: 'space-between', height: '100%' }}>
+    <SafeAreaView style={{ padding: 20, justifyContent: 'space-between', height: '100%', marginTop: 15 }}>
       <View>
         <StackScreenHeader title={campaign.title} />
 
@@ -70,7 +70,7 @@ const Campaign = ({ route, navigation }) => {
       {/* {isAttendBtnVisible ? <ButtonFull text={'Attend Event'} onPress={joinEvent} backgroundColor='#626FDB' /> : null} */}
       {!campaign.is_approved && <ButtonFull onPress={() => approveCampaign(campaign.id)} text='Approve' backgroundColor='#548BDE' />}
 
-    </View>
+    </SafeAreaView>
   )
 }
 

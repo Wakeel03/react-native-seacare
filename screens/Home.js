@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, StyleSheet, Text, Image } from "react-native";
 
 import { COLORS, NFTData } from "../constants";
-import { auth } from '../database/firebase';
+import { auth, db } from '../database/firebase';
 import { FONTS } from '../constants'
 import HomeCard from "../components/HomeCard";
 import { useNavigation } from "@react-navigation/native";
+import { collection, getDocs, query, where } from "firebase/firestore";
+
 
 const Home = () => {
                
   const navigation = useNavigation()
 
-  const handleSearch = (value) => {
-    if (value.length === 0) {
-      setNftData(NFTData);
-    }
+  const [points, setPoints] = useState(0)
 
-    const filteredData = NFTData.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase())
-    );
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        const setUserPoint = async () => {
+          const userRef = query(collection(db, 'Users'), where('uid', '==', user.uid))
+          const userDoc = await getDocs(userRef)
+          const userDocPoint = userDoc.docs[0].data().points
+          setPoints(userDocPoint)
+        }
+    
+        // setUserPoint()
+  
+      } else {
+        navigation.navigate("Login")
+      }
+    })
 
-    if (filteredData.length === 0) {
-      setNftData(NFTData);
-    } else {
-      setNftData(filteredData);
-    }
-  };
+  }, [])
 
   const signOut = () => {
     auth.signOut().then(() => {
@@ -40,6 +47,7 @@ const Home = () => {
         <View style={{ flexDirection: 'row'  }}>
           <Image source={require('../assets/images/SeaCareLogo.png')} style={{ marginRight: 10, width: 25, height: 25  }} resizeMode='cover'/>
           <Text style={styles.title}>SeaCare</Text>
+          {/* <Text style={styles.points}>{points} Pts</Text> */}
         </View>
         <Text style={styles.quote}>- Pollution of the air or of the land all ultimately land up in the sea</Text>
       </View>
@@ -62,7 +70,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#548BDE',
     borderRadius: 10,
-    marginBottom: 20
+    marginBottom: 20,
+    width: '100%'
   },
 
   title: {
@@ -70,6 +79,14 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.regular,
     color: '#fff',
     marginBottom: 10
+  },
+
+  points: {
+    fontSize: 16,
+    fontFamily: FONTS.regular,
+    color: '#fff',
+    marginBottom: 10,
+    marginLeft: 'auto'
   },
 
   quote: {

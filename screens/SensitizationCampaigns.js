@@ -34,9 +34,9 @@ const SensitizationCampaigns = () => {
             <View style={styles.divider}></View>
            </View>
           ))}
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}> */}
             <ButtonFull onPress={() => navigation.navigate('CreateCampaign')} text={'Create Campaign'} backgroundColor='#626FDB' />
-          </View>
+          {/* </View> */}
       </View>
     )
   }
@@ -62,7 +62,8 @@ const SensitizationCampaigns = () => {
       width: '90%',
       flexDirection: 'row',
       backgroundColor: '#fff',
-      paddingVertical: 20
+      paddingVertical: 20,
+      // left: 20
     }
   });
   

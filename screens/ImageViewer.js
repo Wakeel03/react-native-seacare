@@ -8,7 +8,7 @@ const ImageViewer = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ padding: 20, height: '100%', width: '100%', marginTop: 15 }}>
         <StackScreenHeader title="Back" />
-        <Image source={picture} style={{ width: '100%', height: '75%' }} resizeMode='cover' />
+        <Image source={picture} style={{ width: '100%', height: '75%' }} resizeMode='contain' />
     </SafeAreaView>
   )
 }

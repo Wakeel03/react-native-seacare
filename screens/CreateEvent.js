@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { db } from '../database/firebase'
@@ -38,7 +38,7 @@ const CreateEvent = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <StackScreenHeader title='Create Event' />
         <CustomInput
           label={'Name'}
@@ -86,13 +86,14 @@ const CreateEvent = ({ route }) => {
           <ButtonFull onPress={createEvent} text={'Link to Reported Issue'} backgroundColor='#626FDB' />
           <ButtonFull onPress={createEvent} text={'Create'} backgroundColor='#54BD7E' />
         </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
+    marginTop: 15
   },
   buttonsWrapper: {
     marginTop: 30
